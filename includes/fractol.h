@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:48:52 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 14:22:15 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/09 15:19:29 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 # define KEY_RIGHT 65363
 # define KEY_DOWN 65364
 # define KEY_C 99
+# define KEY_PLUS 61
+# define KEY_MINUS 45
 
 /* mouse (X11) */
 # define MOUSE_UP 4
@@ -60,6 +62,7 @@ typedef struct s_frac
 	double	ci;
 	int		shift;
 	int		max_iter;
+	int		iter_bias;
 }	t_frac;
 
 typedef struct s_cpx

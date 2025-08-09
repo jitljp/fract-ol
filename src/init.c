@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:56:59 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 14:47:20 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/09 15:28:12 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	clean_init(t_frac *f)
 	f->ci = 0;
 	f->shift = 0;
 	f->max_iter = 100;
+	f->iter_bias = 0;
 }
 
 void	update_iters(t_frac *f)
@@ -38,13 +39,17 @@ void	update_iters(t_frac *f)
 	double	zoom;
 	int		mi;
 
-	base_w = (f->set == JULIA) ? 4.0 : 3.0;
+	if (f->set == JULIA)
+		base_w = 4.0;
+	else
+		base_w = 3.0;
 	zoom = base_w / (f->max_r - f->min_r);
-	mi = 100 + (int)(15 * log2(zoom + 1.0));
-	if (mi < 100)
-		mi = 100;
-	if (mi > 1000)
-		mi = 1000;
+	mi = 100 + (int)(15.0 * log2(zoom + 1.0));
+	mi += f->iter_bias;
+	if (mi < 50)
+		mi = 50;
+	if (mi > 5000)
+		mi = 5000;
 	f->max_iter = mi;
 }
 
@@ -57,7 +62,6 @@ void	init_complex_plane(t_frac *f)
 
 	if (f->set == JULIA)
 	{
-		// Julia set: centered around origin with 4x4 view
 		center_r = 0.0;
 		center_i = 0.0;
 		width = 4.0;
@@ -65,13 +69,11 @@ void	init_complex_plane(t_frac *f)
 	}
 	else
 	{
-		// Mandelbrot set: centered on the main cardioid
 		center_r = -0.5;
 		center_i = 0.0;
 		width = 3.0;
 		height = width * HEIGHT / WIDTH;
 	}
-
 	f->min_r = center_r - width / 2.0;
 	f->max_r = center_r + width / 2.0;
 	f->max_i = center_i + height / 2.0;

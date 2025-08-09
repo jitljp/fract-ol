@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 13:36:35 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 14:14:10 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/09 15:20:52 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,35 @@ static void	pan(t_frac *f, int dx, int dy)
 	f->max_i += dy * di;
 }
 
+static void	handle_arrow_keys(int key, t_frac *f)
+{
+	if (key == KEY_LEFT)
+		pan(f, -1, 0);
+	if (key == KEY_RIGHT)
+		pan(f, 1, 0);
+	if (key == KEY_UP)
+		pan(f, 0, -1);
+	if (key == KEY_DOWN)
+		pan(f, 0, 1);
+	present(f);
+}
+
+static void	handle_iteration_keys(int key, t_frac *f)
+{
+	if (key == KEY_PLUS)
+	{
+		f->iter_bias += 25;
+		update_iters(f);
+		present(f);
+	}
+	if (key == KEY_MINUS)
+	{
+		f->iter_bias -= 25;
+		update_iters(f);
+		present(f);
+	}
+}
+
 int	on_key(int key, t_frac *f)
 {
 	if (key == KEY_ESC)
@@ -41,17 +70,9 @@ int	on_key(int key, t_frac *f)
 		present(f);
 	}
 	if (key == KEY_LEFT || key == KEY_RIGHT || key == KEY_UP || key == KEY_DOWN)
-	{
-		if (key == KEY_LEFT)
-			pan(f, -1, 0);
-		if (key == KEY_RIGHT)
-			pan(f, 1, 0);
-		if (key == KEY_UP)
-			pan(f, 0, -1);
-		if (key == KEY_DOWN)
-			pan(f, 0, 1);
-		present(f);
-	}
+		handle_arrow_keys(key, f);
+	if (key == KEY_PLUS || key == KEY_MINUS)
+		handle_iteration_keys(key, f);
 	return (0);
 }
 
@@ -72,7 +93,6 @@ static void	zoom_at(t_frac *f, int x, int y, double z)
 	f->min_i = f->max_i + new_h;
 	update_iters(f);
 }
-
 
 int	on_mouse(int button, int x, int y, t_frac *f)
 {

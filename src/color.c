@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 12:49:23 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 14:21:15 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/09 15:14:06 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static double	mu(double zr, double zi, int n)
 	double	m;
 
 	r2 = zr * zr + zi * zi;
-	if (r2 < 1e-10)  // Prevent log of very small numbers
+	if (r2 < 1e-10)
 		return ((double)n);
 	m = (double)n + 1.0 - (log(log(sqrt(r2))) / log(2.0));
-	if (m < 0.0)  // Ensure non-negative result
+	if (m < 0.0)
 		m = 0.0;
 	return (m);
 }
