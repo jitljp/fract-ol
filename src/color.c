@@ -6,21 +6,11 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 12:49:23 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 13:12:15 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/09 14:21:15 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
-
-/* set_base_color:
-*	Update mono base color safely.
-*/
-void	set_base_color(t_frac *f, int color)
-{
-	f->base_color = color;
-	if (f->base_color == 0x000000)
-		f->base_color = 0x333333;
-}
 
 /* mu:
 *	Smooth iteration count for deep gradients.
@@ -31,7 +21,11 @@ static double	mu(double zr, double zi, int n)
 	double	m;
 
 	r2 = zr * zr + zi * zi;
+	if (r2 < 1e-10)  // Prevent log of very small numbers
+		return ((double)n);
 	m = (double)n + 1.0 - (log(log(sqrt(r2))) / log(2.0));
+	if (m < 0.0)  // Ensure non-negative result
+		m = 0.0;
 	return (m);
 }
 
@@ -59,12 +53,8 @@ int	get_color(t_frac *f, int n, double zr, double zi)
 {
 	double	m;
 
-	if (n >= MAX_ITERS)
+	if (n >= f->max_iter)
 		return (0x000000);
 	m = mu(zr, zi, n);
-	if (f->palette_mode == 0)
-		return (wheel_color(m * 6.0, f->shift));
-	if (f->palette_mode == 1)
-		return (color_mono(m, f->base_color));
-	return (color_multi(m));
+	return (wheel_color(m * 3.0, f->shift));
 }

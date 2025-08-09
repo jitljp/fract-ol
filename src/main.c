@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:41:06 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 13:38:59 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/09 14:45:25 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static void	read_args(t_frac *f, int argc, char **argv)
 			julia_init_values(f, argv);
 		else
 		{
-			f->cr = 0.355;
-			f->ci = -0.3842;
+			f->cr = -0.8;
+			f->ci = 0.156;
 		}
 	}
 	else if (argc != 2)

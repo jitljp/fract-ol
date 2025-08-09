@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:48:52 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 13:41:00 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/09 14:22:15 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 # define KEY_RIGHT 65363
 # define KEY_DOWN 65364
 # define KEY_C 99
-# define KEY_P 112
 
 /* mouse (X11) */
 # define MOUSE_UP 4
@@ -59,15 +58,21 @@ typedef struct s_frac
 	double	max_i;
 	double	cr;
 	double	ci;
-	int		palette_mode;
 	int		shift;
-	int		base_color;
-}t_frac;
+	int		max_iter;
+}	t_frac;
+
+typedef struct s_cpx
+{
+	double	r;
+	double	i;
+}	t_cpx;
 
 /* init.c */
 void	clean_init(t_frac *f);
 void	init_complex_plane(t_frac *f);
 void	init(t_frac *f);
+void	update_iters(t_frac *f);
 
 /* image.c */
 int		init_img(t_frac *f);
@@ -82,15 +87,11 @@ int		on_mouse(int button, int x, int y, t_frac *f);
 int		close_btn(t_frac *f);
 
 /* color.c */
-void	set_base_color(t_frac *f, int color);
 int		get_color(t_frac *f, int n, double zr, double zi);
 
 /* color_utils.c */
 int		mix_colors(int a, int b, double t);
-int		color_mono(double m, int base);
-int		color_multi(double m);
 void	color_shift(t_frac *f);
-void	next_palette(t_frac *f);
 
 /* parse.c */
 double	str_to_double(char *str);

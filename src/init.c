@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:56:59 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 13:35:41 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/09 14:47:20 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,27 +28,54 @@ void	clean_init(t_frac *f)
 	f->max_i = 0;
 	f->cr = 0;
 	f->ci = 0;
-	f->palette_mode = 0;
 	f->shift = 0;
-	set_base_color(f, 0x3a9ad9);
+	f->max_iter = 100;
+}
+
+void	update_iters(t_frac *f)
+{
+	double	base_w;
+	double	zoom;
+	int		mi;
+
+	base_w = (f->set == JULIA) ? 4.0 : 3.0;
+	zoom = base_w / (f->max_r - f->min_r);
+	mi = 100 + (int)(15 * log2(zoom + 1.0));
+	if (mi < 100)
+		mi = 100;
+	if (mi > 1000)
+		mi = 1000;
+	f->max_iter = mi;
 }
 
 void	init_complex_plane(t_frac *f)
 {
+	double	center_r;
+	double	center_i;
+	double	width;
+	double	height;
+
 	if (f->set == JULIA)
 	{
-		f->min_r = -2.0;
-		f->max_r = 2.0;
-		f->min_i = -2.0;
-		f->max_i = f->min_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
+		// Julia set: centered around origin with 4x4 view
+		center_r = 0.0;
+		center_i = 0.0;
+		width = 4.0;
+		height = width * HEIGHT / WIDTH;
 	}
 	else
 	{
-		f->min_r = -2.0;
-		f->max_r = 1.0;
-		f->max_i = -1.5;
-		f->min_i = f->max_i + (f->max_r - f->min_r) * HEIGHT / WIDTH;
+		// Mandelbrot set: centered on the main cardioid
+		center_r = -0.5;
+		center_i = 0.0;
+		width = 3.0;
+		height = width * HEIGHT / WIDTH;
 	}
+
+	f->min_r = center_r - width / 2.0;
+	f->max_r = center_r + width / 2.0;
+	f->max_i = center_i + height / 2.0;
+	f->min_i = center_i - height / 2.0;
 }
 
 void	init(t_frac *f)
@@ -60,4 +87,5 @@ void	init(t_frac *f)
 	if (!f->win)
 		clean_and_exit(msg("MLX window creation error.", "", 1), f);
 	init_complex_plane(f);
+	update_iters(f);
 }

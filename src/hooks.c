@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 13:36:35 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 13:36:36 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/09 14:14:10 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,6 @@ int	on_key(int key, t_frac *f)
 		color_shift(f);
 		present(f);
 	}
-	if (key == KEY_P)
-	{
-		next_palette(f);
-		present(f);
-	}
 	if (key == KEY_LEFT || key == KEY_RIGHT || key == KEY_UP || key == KEY_DOWN)
 	{
 		if (key == KEY_LEFT)
@@ -64,18 +59,20 @@ static void	zoom_at(t_frac *f, int x, int y, double z)
 {
 	double	mx;
 	double	my;
-	double	w;
-	double	h;
+	double	new_w;
+	double	new_h;
 
 	mx = f->min_r + (f->max_r - f->min_r) * ((double)x / (WIDTH - 1));
 	my = f->max_i + (f->min_i - f->max_i) * ((double)y / (HEIGHT - 1));
-	w = (f->max_r - f->min_r) * z;
-	h = (f->min_i - f->max_i) * z;
-	f->min_r = mx - w * ( (mx - f->min_r) / (f->max_r - f->min_r) );
-	f->max_r = f->min_r + w;
-	f->max_i = my - h * ( (my - f->max_i) / (f->min_i - f->max_i) );
-	f->min_i = f->max_i + h;
+	new_w = (f->max_r - f->min_r) * z;
+	new_h = (f->min_i - f->max_i) * z;
+	f->min_r = mx - (mx - f->min_r) * z;
+	f->max_r = f->min_r + new_w;
+	f->max_i = my - (my - f->max_i) * z;
+	f->min_i = f->max_i + new_h;
+	update_iters(f);
 }
+
 
 int	on_mouse(int button, int x, int y, t_frac *f)
 {
