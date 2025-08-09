@@ -6,25 +6,16 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 11:52:52 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 13:19:06 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/09 13:36:58 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
-/*
-Closes the program cleanly by freeing allocated memory,
-destroying all MiniLibX resources, and ending the MLX loop.
-Resources are released in reverse creation order:
-free heap memory (palette), destroy image, destroy window,
-end the event loop, destroy the display, and free the MLX
-connection before exiting with the given status code.
- */
-
-void	clean_and_exit(int exit_code, t_frac *f)
+void	clean_and_exit(int code, t_frac *f)
 {
 	if (!f)
-		exit(exit_code);
+		exit(code);
 	if (f->img && f->mlx)
 	{
 		mlx_destroy_image(f->mlx, f->img);
@@ -42,18 +33,24 @@ void	clean_and_exit(int exit_code, t_frac *f)
 		free(f->mlx);
 		f->mlx = NULL;
 	}
-	exit(exit_code);
+	exit(code);
 }
 
-/*
-Prints an error message to standard error in the format:
-"Fractol: " + str1 + str2
-Returns the given exit_code without exiting.
-*/
-int	msg(char *str1, char *str2, int exit_code)
+int	msg(char *s1, char *s2, int code)
 {
 	ft_putstr_fd("Fractol: ", 2);
-	ft_putstr_fd(str1, 2);
-	ft_putstr_fd(str2, 2);
-	return (exit_code);
+	ft_putstr_fd(s1, 2);
+	ft_putstr_fd(s2, 2);
+	return (code);
+}
+
+void	help_msg(t_frac *f)
+{
+	ft_putstr_fd("\nUsage: ./fractol <set> [params]\n", 2);
+	ft_putstr_fd("  mandelbrot | m\n", 2);
+	ft_putstr_fd("  julia      | j   <cr> <ci>\n", 2);
+	ft_putstr_fd("\nExamples:\n", 2);
+	ft_putstr_fd("  ./fractol mandelbrot\n", 2);
+	ft_putstr_fd("  ./fractol julia 0.355 -0.3842\n\n", 2);
+	clean_and_exit(1, f);
 }

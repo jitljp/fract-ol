@@ -6,7 +6,7 @@
 #    By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/03 12:28:58 by mjeremy           #+#    #+#              #
-#    Updated: 2025/08/03 12:33:44 by mjeremy          ###   ########.fr        #
+#    Updated: 2025/08/09 13:39:33 by mjeremy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,14 +22,7 @@ MLX			=	$(MLX_DIR)/libmlx.a
 
 INCLUDES	=	-I includes -I $(LIBFT_DIR)/include -I $(MLX_DIR)
 
-SRCS		=	src/main.c \
-				src/parse.c \
-				src/help.c \
-				src/mandelbrot.c \
-				src/julia.c \
-				src/mandelbox.c \
-				src/draw.c \
-				src/mouse.c
+SRCS		=	$(wildcard src/*.c)
 
 OBJS		=	$(SRCS:.c=.o)
 
