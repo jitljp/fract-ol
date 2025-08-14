@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:41:06 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 15:35:37 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/14 10:00:00 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,14 @@ static void	read_args(t_frac *f, int argc, char **argv)
 		help_msg(f);
 }
 
+/*
+Entry point of fract-ol.
+Sets a clean state, validates/parses CLI, starts MiniLibX, creates
+the off-screen image, renders the first frame, displays it, installs
+key/mouse/close hooks, then enters the MLX event loop.
+All failure paths call clean_and_exit(...) to free resources.
+Returns 0 on normal termination.
+*/
 int	main(int argc, char **argv)
 {
 	t_frac	f;

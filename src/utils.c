@@ -6,12 +6,21 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 11:52:52 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 13:36:58 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/14 10:19:18 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
+/*
+Centralized cleanup and exit.
+Destroys MiniLibX resources in the right order and terminates.
+Order: image -> window -> loop_end -> destroy_display -> free.
+If f is NULL: exits immediately with code.
+If image/window exist: destroys them and sets pointers to NULL.
+If MLX exists: ends loop, destroys display, frees it, sets NULL.
+Never returns; always calls exit(code). Safe to call repeatedly.
+*/
 void	clean_and_exit(int code, t_frac *f)
 {
 	if (!f)
@@ -36,19 +45,25 @@ void	clean_and_exit(int code, t_frac *f)
 	exit(code);
 }
 
-int	msg(char *s1, char *s2, int code)
+int	msg(char *str, int code)
 {
 	ft_putstr_fd("Fractol: ", 2);
-	ft_putstr_fd(s1, 2);
-	ft_putstr_fd(s2, 2);
+	ft_putstr_fd(str, 2);
 	return (code);
 }
 
+/*
+Print usage/help message to stderr.
+Called when args are missing or invalid.
+*/
 void	help_msg(t_frac *f)
 {
 	ft_putstr_fd("\nUsage: ./fractol <set> [params]\n", 2);
 	ft_putstr_fd("  mandelbrot | m\n", 2);
 	ft_putstr_fd("  julia      | j   <cr> <ci>\n", 2);
+	ft_putstr_fd("  * <cr> and <ci> must include a decimal point:\n", 2);
+	ft_putstr_fd("  * valid: ./fractol j 0.0 1.0\n", 2);
+	ft_putstr_fd("  * invalid: ./fractol j 0 1\n", 2);
 	ft_putstr_fd("\nExamples:\n", 2);
 	ft_putstr_fd("  ./fractol mandelbrot\n", 2);
 	ft_putstr_fd("  ./fractol julia 0.355 -0.3842\n\n", 2);

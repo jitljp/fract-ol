@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:48:52 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 15:19:29 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/14 10:19:25 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,26 +73,29 @@ typedef struct s_cpx
 
 /* init.c */
 void	clean_init(t_frac *f);
+void	update_iters(t_frac *f);
 void	init_complex_plane(t_frac *f);
 void	init(t_frac *f);
-void	update_iters(t_frac *f);
 
 /* image.c */
 int		init_img(t_frac *f);
 void	reinit_img(t_frac *f);
+int		iter_mandel(double cr, double ci, t_cpx *z, int max_iter);
+int		iter_julia(t_frac *f, double zr, double zi, t_cpx *z);
 
 /* render.c */
 void	render(t_frac *f);
 
 /* hooks.c */
+void	present(t_frac *f);
 int		on_key(int key, t_frac *f);
+
+/* mouse_hooks.c */
 int		on_mouse(int button, int x, int y, t_frac *f);
 int		close_btn(t_frac *f);
 
 /* color.c */
 int		get_color(t_frac *f, int n, double zr, double zi);
-
-/* color_utils.c */
 int		mix_colors(int a, int b, double t);
 void	color_shift(t_frac *f);
 
@@ -100,8 +103,8 @@ void	color_shift(t_frac *f);
 double	str_to_double(char *str);
 
 /* utils.c */
-int		msg(char *s1, char *s2, int code);
 void	clean_and_exit(int code, t_frac *f);
+int	msg(char *str, int code);
 void	help_msg(t_frac *f);
 
 #endif

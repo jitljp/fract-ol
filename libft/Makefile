@@ -18,8 +18,7 @@ CHAR_SRCS = $(SRCS_DIR)/char/ft_isalnum.c \
 CONV_SRCS = $(SRCS_DIR)/conv/ft_atoi.c \
 			$(SRCS_DIR)/conv/ft_itoa.c
 
-GNL_SRCS = $(SRCS_DIR)/gnl/get_next_line.c \
-		   $(SRCS_DIR)/gnl/get_next_line_utils.c
+GNL_SRCS = $(SRCS_DIR)/gnl/get_next_line.c
 
 IO_SRCS = $(SRCS_DIR)/io/ft_putchar_fd.c \
 		  $(SRCS_DIR)/io/ft_putendl_fd.c \

@@ -6,12 +6,19 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:56:59 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 15:28:12 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/14 10:19:47 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
+/*
+Initialize t_frac to a clean, known state.
+Nulls MLX/window/image pointers and buffer; zeroes numeric fields; sets
+safe defaults (e.g., max_iter) and a sentinel (set = -1) before parsing.
+Enables safe early exits via clean_and_exit(...) and avoids using
+uninitialized fields later in the program.
+*/
 void	clean_init(t_frac *f)
 {
 	f->mlx = NULL;
@@ -84,10 +91,10 @@ void	init(t_frac *f)
 {
 	f->mlx = mlx_init();
 	if (!f->mlx)
-		clean_and_exit(msg("MLX connection error.", "", 1), f);
+		clean_and_exit(msg("MLX connection error.", 1), f);
 	f->win = mlx_new_window(f->mlx, WIDTH, HEIGHT, "Fract-ol");
 	if (!f->win)
-		clean_and_exit(msg("MLX window creation error.", "", 1), f);
+		clean_and_exit(msg("MLX window creation error.", 1), f);
 	init_complex_plane(f);
 	update_iters(f);
 }
