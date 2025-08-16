@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:41:06 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/14 13:13:10 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/16 13:11:00 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	main(int argc, char **argv)
 		clean_and_exit(1, &f);
 	render(&f);
 	mlx_put_image_to_window(f.mlx, f.win, f.img, 0, 0);
-	mlx_hook(f.win, 2, 1L << 0, on_key, &f);
+	mlx_hook(f.win, 2, 1, on_key, &f);
 	mlx_mouse_hook(f.win, on_mouse, &f);
 	mlx_hook(f.win, 17, 0, close_btn, &f);
 	mlx_loop(f.mlx);

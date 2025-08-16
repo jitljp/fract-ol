@@ -6,7 +6,7 @@
 #    By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/03 12:28:58 by mjeremy           #+#    #+#              #
-#    Updated: 2025/08/09 13:39:33 by mjeremy          ###   ########.fr        #
+#    Updated: 2025/08/16 15:00:22 by mjeremy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,17 +22,22 @@ MLX			=	$(MLX_DIR)/libmlx.a
 
 INCLUDES	=	-I includes -I $(LIBFT_DIR)/include -I $(MLX_DIR)
 
-SRCS		=	$(wildcard src/*.c)
+SRCS		=	src/color.c \
+				src/hooks.c \
+				src/image.c \
+				src/init.c \
+				src/main.c \
+				src/mouse_hooks.c\
+				src/parse.c \
+				src/render.c \
+				src/utils.c
 
 OBJS		=	$(SRCS:.c=.o)
 
 all	:	$(NAME)
 
 $(NAME)	:	$(LIBFT) $(MLX) $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) \
-	      $(LIBFT) $(MLX) \
-	      -lXext -lX11 -lm \
-	      -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(MLX) -lXext -lX11 -lm -o $(NAME)
 
 $(LIBFT)	:
 	make -C $(LIBFT_DIR)

@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:48:52 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/16 11:55:26 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/16 13:43:38 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	init(t_frac *f);
 
 /* image.c */
 int		init_img(t_frac *f);
-void	reinit_img(t_frac *f);
 int		iter_mandel(double cr, double ci, int max_iter);
 int		iter_julia(t_frac *f, double zr, double zi);
 
@@ -81,7 +80,7 @@ int		iter_julia(t_frac *f, double zr, double zi);
 void	render(t_frac *f);
 
 /* hooks.c */
-void	present(t_frac *f);
+void	push_image(t_frac *f);
 int		on_key(int key, t_frac *f);
 
 /* mouse_hooks.c */
@@ -90,7 +89,6 @@ int		close_btn(t_frac *f);
 
 /* color.c */
 int		get_color(t_frac *f, int n);
-int		mix_colors(int a, int b, double t);
 void	color_shift(t_frac *f);
 
 /* parse.c */

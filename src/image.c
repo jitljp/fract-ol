@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 13:28:22 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/16 12:00:48 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/16 13:41:00 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,6 @@ int	init_img(t_frac *f)
 	if (!f->buf)
 		return (msg("Buffer address error.", 1));
 	return (0);
-}
-
-void	reinit_img(t_frac *f)
-{
-	if (f->img)
-		mlx_destroy_image(f->mlx, f->img);
-	f->img = NULL;
-	f->buf = NULL;
-	init_img(f);
 }
 
 /*
