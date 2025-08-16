@@ -6,18 +6,29 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 13:36:06 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/14 13:54:38 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/16 12:01:58 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
+/*
+Write a single pixel into the off-screen image buffer.
+- (x, y) are pixel coordinates in the window (0,0 at top-left).
+- color is a 32-bit integer (0xRRGGBB) to store at that pixel.
+- f->buf = raw byte pointer to the start of the image data.
+- f->line_bytes = number of bytes in each image row (stride).
+- f->bpp = bits per pixel; divided by 8 gives bytes per pixel.
+The function computes the byte offset for (x, y), casts it to int*,
+and stores the color there. The buffer will be drawn to the window
+later with mlx_put_image_to_window().
+*/
 static void	put_pixel(t_frac *f, int x, int y, int color)
 {
-	char	*p;
+	char	*pixel;
 
-	p = f->buf + y * f->line + x * (f->bpp / 8);
-	*(int *)p = color;
+	pixel = f->buf + (y * f->line_bytes) + (x * (f->bpp / 8));
+	*(int *)pixel = color;
 }
 
 /* map_r:
@@ -31,8 +42,8 @@ static double	map_r(t_frac *f, int x)
 {
 	double	r;
 
-	r = f->min_r + (f->max_r - f->min_r)
-		* ((double)x / (WIDTH - 1));
+	r = (f->max_r - f->min_r) * ((double)x / (WIDTH - 1))
+		+ f->min_r;
 	return (r);
 }
 
@@ -47,8 +58,8 @@ static double	map_i(t_frac *f, int y)
 {
 	double	i;
 
-	i = f->max_i + (f->min_i - f->max_i)
-		* ((double)y / (HEIGHT - 1));
+	i = (f->min_i - f->max_i) * ((double)y / (HEIGHT - 1))
+		+ f->max_i;
 	return (i);
 }
 
@@ -63,7 +74,6 @@ void	render(t_frac *f)
 	int		x;
 	int		y;
 	int		n;
-	t_cpx	z;
 
 	y = 0;
 	while (y < HEIGHT)
@@ -72,10 +82,10 @@ void	render(t_frac *f)
 		while (x < WIDTH)
 		{
 			if (f->set == MANDELBROT)
-				n = iter_mandel(map_r(f, x), map_i(f, y), &z, f->max_iter);
+				n = iter_mandel(map_r(f, x), map_i(f, y), f->max_iter);
 			else
-				n = iter_julia(f, map_r(f, x), map_i(f, y), &z);
-			put_pixel(f, x, y, get_color(f, n, z.r, z.i));
+				n = iter_julia(f, map_r(f, x), map_i(f, y));
+			put_pixel(f, x, y, get_color(f, n));
 			x++;
 		}
 		y++;

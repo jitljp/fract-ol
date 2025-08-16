@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:56:59 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/14 12:42:47 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/16 10:08:51 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	clean_init(t_frac *f)
 	f->img = NULL;
 	f->buf = NULL;
 	f->bpp = 0;
-	f->line = 0;
+	f->line_bytes = 0;
 	f->endian = 0;
 	f->set = -1;
 	f->min_r = 0;

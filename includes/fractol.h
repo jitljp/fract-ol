@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:48:52 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/14 10:19:25 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/16 11:55:26 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_frac
 	void	*img;
 	char	*buf;
 	int		bpp;
-	int		line;
+	int		line_bytes;
 	int		endian;
 	int		set;
 	double	min_r;
@@ -63,13 +63,7 @@ typedef struct s_frac
 	int		shift;
 	int		max_iter;
 	int		iter_bias;
-}	t_frac;
-
-typedef struct s_cpx
-{
-	double	r;
-	double	i;
-}	t_cpx;
+}		t_frac;
 
 /* init.c */
 void	clean_init(t_frac *f);
@@ -80,8 +74,8 @@ void	init(t_frac *f);
 /* image.c */
 int		init_img(t_frac *f);
 void	reinit_img(t_frac *f);
-int		iter_mandel(double cr, double ci, t_cpx *z, int max_iter);
-int		iter_julia(t_frac *f, double zr, double zi, t_cpx *z);
+int		iter_mandel(double cr, double ci, int max_iter);
+int		iter_julia(t_frac *f, double zr, double zi);
 
 /* render.c */
 void	render(t_frac *f);
@@ -95,7 +89,7 @@ int		on_mouse(int button, int x, int y, t_frac *f);
 int		close_btn(t_frac *f);
 
 /* color.c */
-int		get_color(t_frac *f, int n, double zr, double zi);
+int		get_color(t_frac *f, int n);
 int		mix_colors(int a, int b, double t);
 void	color_shift(t_frac *f);
 
@@ -104,7 +98,7 @@ double	str_to_double(char *str);
 
 /* utils.c */
 void	clean_and_exit(int code, t_frac *f);
-int	msg(char *str, int code);
+int		msg(char *str, int code);
 void	help_msg(t_frac *f);
 
 #endif
