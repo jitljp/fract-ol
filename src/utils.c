@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 11:52:52 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/14 10:45:44 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/16 16:01:29 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ void	help_msg(t_frac *f)
 {
 	ft_putstr_fd("\nUsage: ./fractol <set> [params]\n", 2);
 	ft_putstr_fd("  mandelbrot | m\n", 2);
-	ft_putstr_fd("  julia      | j   <cr> <ci>\n", 2);
-	ft_putstr_fd("  * <cr> and <ci> must include a decimal point:\n", 2);
-	ft_putstr_fd("  * valid: ./fractol j 0.0 1.0\n", 2);
-	ft_putstr_fd("  * invalid: ./fractol j 0 1\n", 2);
+	ft_putstr_fd("  julia      | j   <cr> <ci>\n\n", 2);
 	ft_putstr_fd("\nExamples:\n", 2);
 	ft_putstr_fd("  ./fractol mandelbrot\n", 2);
 	ft_putstr_fd("  ./fractol julia 0.355 -0.3842\n\n", 2);

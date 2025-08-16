@@ -6,7 +6,7 @@
 #    By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/03 12:28:58 by mjeremy           #+#    #+#              #
-#    Updated: 2025/08/16 15:15:59 by mjeremy          ###   ########.fr        #
+#    Updated: 2025/08/16 15:49:16 by mjeremy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,11 @@ clean	:
 fclean	:	clean
 	rm -f $(NAME)
 	make -C $(LIBFT_DIR) fclean
+	make -C $(MLX_DIR) clean
 
 re	:	fclean all
 
-.PHONY	:	all clean fclean re
+bonus: $(NAME)
+	@echo "\nBonus features integrated: mouse-centered zoom, arrow pan, color shift"
+
+.PHONY	:	all clean fclean re bonus

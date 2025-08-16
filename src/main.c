@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:41:06 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/16 13:11:00 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/16 15:59:48 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,6 @@ print help message and exit.
 */
 static void	julia_init_values(t_frac *f, char **argv)
 {
-	if (!ft_strchr(argv[2], '.'))
-		help_msg(f);
-	if (!ft_strchr(argv[3], '.'))
-		help_msg(f);
 	f->cr = str_to_double(argv[2]);
 	f->ci = str_to_double(argv[3]);
 	if (f->cr > 2.0 || f->cr < -2.0 || f->ci > 2.0 || f->ci < -2.0)

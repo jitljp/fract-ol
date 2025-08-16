@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 10:31:33 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/14 12:08:57 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/16 16:03:53 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static void	sign_check(char *str, int *sign, int *i)
 
 /*
 Converts a numeric string to a double.
-Accepts an optional leading sign, then digits, then a decimal,
-	then fractional digits.
+Accepts an optional leading sign, then digits,
+	then an optional decimal and fractional digits.
 NO whitespace or trailing characters allowed.
 Returns -42 on invalid format (outside of valid >-2.0 and <2.0 range).
 */
@@ -46,14 +46,17 @@ double	str_to_double(char *str)
 	div = 0.1;
 	sign_check(str, &sign, &i);
 	while (ft_isdigit(str[i]))
-		nb = (nb * 10.0) + (str[i++] - '0');
-	if (str[i] != '.')
-		return (-42);
-	i++;
-	while (ft_isdigit(str[i]))
 	{
-		nb += (str[i++] - '0') * div;
-		div *= 0.1;
+		nb = (nb * 10.0) + (str[i++] - '0');
+	}
+	if (str[i] == '.')
+	{
+		i++;
+		while (ft_isdigit(str[i]))
+		{
+			nb += (str[i++] - '0') * div;
+			div *= 0.1;
+		}
 	}
 	if (str[i] != '\0')
 		return (-42);

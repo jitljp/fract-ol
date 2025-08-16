@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 10:48:52 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/16 13:43:38 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/16 15:36:38 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define FRACTOL_H
 
 # include <stdlib.h>
-# include <unistd.h>
 # include <math.h>
 # include "../libft/libft.h"
 # include "../minilibx/mlx.h"
@@ -22,9 +21,6 @@
 /* window */
 # define WIDTH 800
 # define HEIGHT 600
-
-/* iteration */
-# define MAX_ITERS 200
 
 /* sets */
 # define MANDELBROT 1
