@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 10:31:33 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/09 11:53:14 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/14 12:08:57 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 Skips optional leading sign, sets sign if needed.
-Increments index is sign is found.
+Increments index if sign is found.
 */
 static void	sign_check(char *str, int *sign, int *i)
 {

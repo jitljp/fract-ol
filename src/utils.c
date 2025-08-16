@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 11:52:52 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/14 10:19:18 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/14 10:45:44 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ void	clean_and_exit(int code, t_frac *f)
 	exit(code);
 }
 
+/*
+Simple message printer upon MLX error.
+Always called as an argument to clean_and_exit.
+*/
 int	msg(char *str, int code)
 {
 	ft_putstr_fd("Fractol: ", 2);

@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:56:59 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/14 10:19:47 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/14 12:42:47 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,21 @@ void	clean_init(t_frac *f)
 	f->iter_bias = 0;
 }
 
+/*
+Adjust iteration budget based on zoom.
+- base_w = canonical width
+- zoom = base_w / current_width; 1 at start, >1 when zoomed
+- mi (max iterations) = 100 + 15*log2(zoom+1) + user bias
+	then clamped (min 50, max 5000)
+Log2 makes iterations grow gently: each 2x zoom = +15 iterations
+*/
 void	update_iters(t_frac *f)
 {
 	double	base_w;
 	double	zoom;
 	int		mi;
 
-	if (f->set == JULIA)
-		base_w = 4.0;
-	else
-		base_w = 3.0;
+	base_w = 4.0;
 	zoom = base_w / (f->max_r - f->min_r);
 	mi = 100 + (int)(15.0 * log2(zoom + 1.0));
 	mi += f->iter_bias;
@@ -60,6 +65,11 @@ void	update_iters(t_frac *f)
 	f->max_iter = mi;
 }
 
+/*
+Choose a sensible starting viewpoint on the complex plane,
+and set (min_r, max_r, min_i, max_i),
+preserving the window aspet ratio (HEIGHT/WIDTH)
+*/
 void	init_complex_plane(t_frac *f)
 {
 	double	center_r;
@@ -67,26 +77,29 @@ void	init_complex_plane(t_frac *f)
 	double	width;
 	double	height;
 
-	if (f->set == JULIA)
-	{
-		center_r = 0.0;
-		center_i = 0.0;
-		width = 4.0;
-		height = width * HEIGHT / WIDTH;
-	}
-	else
-	{
-		center_r = -0.5;
-		center_i = 0.0;
-		width = 3.0;
-		height = width * HEIGHT / WIDTH;
-	}
+	center_r = 0.0;
+	center_i = 0.0;
+	width = 4.0;
+	height = width * HEIGHT / WIDTH;
 	f->min_r = center_r - width / 2.0;
 	f->max_r = center_r + width / 2.0;
 	f->max_i = center_i + height / 2.0;
 	f->min_i = center_i - height / 2.0;
 }
 
+/*
+Bootstrap the graphics context and initial fractal state.
+1) mlx_init()
+	Connect to MLX (graphics backend)
+2) mlx_new_window()
+	Create the main window with given WIDTH and HEIGHT
+3) init_complex_plane()
+	Initialize the complex-plane bounds to match the chosen set
+	and preserve aspect ratio.
+4) update_iters()
+	Initialize the iteration budget based on current view/zoom.
+On any failure prints an error and exits via clean_and_exit().
+*/
 void	init(t_frac *f)
 {
 	f->mlx = mlx_init();

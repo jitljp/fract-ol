@@ -6,7 +6,7 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 13:36:06 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/14 09:28:40 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/14 13:54:38 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ static void	put_pixel(t_frac *f, int x, int y, int color)
 	*(int *)p = color;
 }
 
+/* map_r:
+Maps a horizontal pixel coordinate x (0..WIDTH-1) to its
+corresponding real-axis value in the complex plane based on
+the current view window [min_r..max_r]. Uses linear interpolation
+so the leftmost pixel maps to min_r and the rightmost pixel maps
+to max_r.
+*/
 static double	map_r(t_frac *f, int x)
 {
 	double	r;
@@ -29,6 +36,13 @@ static double	map_r(t_frac *f, int x)
 	return (r);
 }
 
+/* map_i:
+Maps a vertical pixel coordinate y (0..HEIGHT-1) to its
+corresponding imaginary-axis value in the complex plane based
+on the current view window [min_i..max_i]. Uses linear interpolation
+with inverted direction so the top pixel maps to max_i and the
+bottom pixel maps to min_i, matching screen coordinates.
+*/
 static double	map_i(t_frac *f, int y)
 {
 	double	i;
@@ -38,6 +52,12 @@ static double	map_i(t_frac *f, int y)
 	return (i);
 }
 
+/*
+Iterates over every pixel in the window, maps its (x,y) coordinates to
+the corresponding point in the complex plane, computes the number of
+iterations before escape for the selected fractal set, converts that
+result to a color, and writes it into the image buffer.
+*/
 void	render(t_frac *f)
 {
 	int		x;

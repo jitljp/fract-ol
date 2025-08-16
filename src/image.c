@@ -6,12 +6,18 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 13:28:22 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/14 10:19:37 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/14 13:17:07 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
+/*
+Create a new image buffer using MiniLibX and store its pointer in f->img.
+Also retrieve the image's raw pixel buffer address, bits per pixel,
+line length (stride), and endian setting, storing them in the t_frac struct.
+Returns 0 on success or an error code if image creation or buffer retrieval fails.
+*/
 int	init_img(t_frac *f)
 {
 	f->img = mlx_new_image(f->mlx, WIDTH, HEIGHT);

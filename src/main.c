@@ -6,12 +6,18 @@
 /*   By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 13:41:06 by mjeremy           #+#    #+#             */
-/*   Updated: 2025/08/14 10:00:00 by mjeremy          ###   ########.fr       */
+/*   Updated: 2025/08/14 13:13:10 by mjeremy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fractol.h"
 
+/*
+Verify the format of arguments given for Julia,
+and convert them from ASCII to double.
+If the values aren't in the valid range,
+print help message and exit.
+*/
 static void	julia_init_values(t_frac *f, char **argv)
 {
 	if (!ft_strchr(argv[2], '.'))
@@ -24,6 +30,13 @@ static void	julia_init_values(t_frac *f, char **argv)
 		help_msg(f);
 }
 
+/*
+Converts the given argument to lowercase and checks if it matches
+the specified full string (str) or its one-character alias (c).
+Allows case-insensitive matching and accepts either the full
+fractal name or its short version.
+Returns 1 if a match is found, 0 otherwise.
+*/
 static int	verify_arg(char *argv, char *str, char c)
 {
 	int	i;
@@ -41,6 +54,10 @@ static int	verify_arg(char *argv, char *str, char c)
 	return (0);
 }
 
+/*
+Calls verify_arg to identify the fractal set.
+Prints help and exits if there is an issue in the args.
+*/
 static void	get_set(t_frac *f, char **argv)
 {
 	if (verify_arg(argv[1], "mandelbrot", 'm'))
@@ -51,6 +68,16 @@ static void	get_set(t_frac *f, char **argv)
 		help_msg(f);
 }
 
+/*
+Parse and validate CLI arguments; choose fractal set and Julia params.
+- Uses get_set(f, argv) to set f->set from argv[1] (mandelbrot/m or julia/j).
+- If JULIA: allow either no params (use built-in defaults cr=0.34, ci=-0.05)
+  or two params (argv[2], argv[3]) via julia_init_values(f, argv).
+  Any other argc pattern → help_msg(f) (exits).
+- If not JULIA (e.g., Mandelbrot): require exactly 2 args (prog + set),
+  otherwise show help and exit.
+Used at startup (from main) to finalize the render mode before init/render.
+*/
 static void	read_args(t_frac *f, int argc, char **argv)
 {
 	get_set(f, argv);
@@ -87,7 +114,7 @@ int	main(int argc, char **argv)
 		help_msg(&f);
 	read_args(&f, argc, argv);
 	init(&f);
-	if (init_img(&f))
+	if (init_img(&f) != 0)
 		clean_and_exit(1, &f);
 	render(&f);
 	mlx_put_image_to_window(f.mlx, f.win, f.img, 0, 0);
