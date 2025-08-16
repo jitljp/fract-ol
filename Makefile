@@ -6,7 +6,7 @@
 #    By: mjeremy <mjeremy@student.42tokyo.jp>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/03 12:28:58 by mjeremy           #+#    #+#              #
-#    Updated: 2025/08/16 15:00:22 by mjeremy          ###   ########.fr        #
+#    Updated: 2025/08/16 15:15:59 by mjeremy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,10 @@ NAME		=	fractol
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror
 
-LIBFT_DIR	=	libft
+LIBFT_DIR	=	includes/libft
 LIBFT		=	$(LIBFT_DIR)/libft.a
 
-MLX_DIR		=	minilibx
+MLX_DIR		=	includes/minilibx
 MLX			=	$(MLX_DIR)/libmlx.a
 
 INCLUDES	=	-I includes -I $(LIBFT_DIR)/include -I $(MLX_DIR)
